@@ -31,10 +31,10 @@ public:
     // void setSize(sf::Vector2f newSize);
 
 private:
+    float m_speed = 350.f;
+    float m_borderOffSet = 7.5f;
+    float m_bodySize = 15.f;
     std::vector<Player> player;
-    // std::vector<sf::Vector2f> m_positions;
     sf::Keyboard::Key m_direction;
-    const sf::Vector2f size = sf::Vector2f(7.0f, 7.0f);
-    float m_speed = 200.f;
-    float m_borderOffSet = 3.5f;
+    const sf::Vector2f size = sf::Vector2f(m_bodySize, m_bodySize);
 };

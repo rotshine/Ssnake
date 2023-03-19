@@ -63,10 +63,10 @@ int main()
 
         window.clear(sf::Color::Black);
         s.move(dt.asSeconds(), viewSize);
-        s.eat(food);
 
         // Desenha todas as entidades.
         draw();
+        s.eat(food);
 
         window.display();
     }

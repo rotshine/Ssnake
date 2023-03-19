@@ -1,10 +1,10 @@
 #include "Engine.h"
 
-bool Engine::collider(sf::RectangleShape &player, sf::RectangleShape food)
+bool Engine::collider(sf::RectangleShape player, sf::RectangleShape food)
 {
+    auto firstBox = player.getGlobalBounds();
+    auto secondBox =  food.getGlobalBounds();
 
-    sf::FloatRect boundingBox = player.getGlobalBounds();
-    sf::FloatRect targetBox = food.getGlobalBounds();
+    return firstBox.intersects(secondBox);
 
-    return boundingBox.intersects(targetBox);
 }

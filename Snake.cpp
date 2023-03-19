@@ -1,7 +1,8 @@
-#include <iostream>
 #include "Snake.h"
 
-Snake::Snake(std::vector<sf::Vector2f> corpse, sf::Keyboard::Key direction) : m_positions(corpse), m_direction(direction)
+Snake::Snake(std::vector<Player> initialPlayer,
+             sf::Keyboard::Key direction)
+    : player(initialPlayer), m_direction(direction)
 {
 }
 Snake::~Snake() {}
@@ -48,37 +49,55 @@ void Snake::update(sf::Event event)
 }
 
 // Realiza o movimento do player.
-void Snake::move(float dt)
+void Snake::move(float dt, sf::Vector2f windowSize)
 {
     switch (m_direction)
     {
     case sf::Keyboard::Right:
-        for (size_t i = 0; i < m_positions.size(); i++)
+        for (size_t i = 0; i < player.size(); i++)
         {
-            std::cout << "Direita" << std::endl;
-            m_positions[i].x += m_speed * dt;
+            player[i].pos.x += m_speed * dt;
+
+            if (player[i].pos.x + m_borderOffSet > windowSize.x)
+            {
+                player[i].pos.x = windowSize.x - m_borderOffSet;
+            }
         }
         break;
 
     case sf::Keyboard::Left:
-        for (size_t i = 0; i < m_positions.size(); i++)
+        for (size_t i = 0; i < player.size(); i++)
         {
-            std::cout << "Esquerda" << std::endl;
-            m_positions[i].x -= m_speed * dt;
+            player[i].pos.x -= m_speed * dt;
+
+            if (player[i].pos.x - m_borderOffSet < 0)
+            {
+                player[i].pos.x = m_borderOffSet;
+            }
         }
         break;
 
     case sf::Keyboard::Up:
-        for (size_t i = 0; i < m_positions.size(); i++)
+        for (size_t i = 0; i < player.size(); i++)
         {
-            m_positions[i].y -= m_speed * dt;
+            player[i].pos.y -= m_speed * dt;
+
+            if (player[i].pos.y - m_borderOffSet < 0)
+            {
+                player[i].pos.y = m_borderOffSet;
+            };
         }
         break;
 
     case sf::Keyboard::Down:
-        for (size_t i = 0; i < m_positions.size(); i++)
+        for (size_t i = 0; i < player.size(); i++)
         {
-            m_positions[i].y += m_speed * dt;
+            player[i].pos.y += m_speed * dt;
+
+            if (player[i].pos.y + m_borderOffSet > windowSize.y)
+            {
+                player[i].pos.y = windowSize.y - m_borderOffSet;
+            };
         }
         break;
 
@@ -90,15 +109,32 @@ void Snake::move(float dt)
 // Função para desenhar a nosso player na tela.
 void Snake::draw(sf::RenderWindow &window)
 {
-    for (size_t i = 0; i < m_positions.size(); i++)
+    for (size_t i = 0; i < player.size(); i++)
     {
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setOrigin(size.x / 2., size.y / 2.);
         rect.setFillColor(sf::Color::White);
-        rect.setPosition(m_positions[i].x, m_positions[i].y);
         rect.setOutlineColor(sf::Color(186, 186, 186)); // Cor um pouco acinzentada.
         rect.setOutlineThickness(1.f);
+        rect.setPosition(player[i].pos.x, player[i].pos.y);
+
+
+
         window.draw(rect);
     }
+}
+
+void Snake::eat(Food &food)
+{
+    
+    sf::FloatRect boundingBox = player[0].shape.getGlobalBounds();
+    sf::FloatRect targetBox = food.getFoodShape().getGlobalBounds();
+
+    
+    // if (Engine::collider(player[0].shape, food.getFoodShape()))
+    //     food.setFoodDraw(false);
+   if (boundingBox.intersects(targetBox)){
+        food.setFoodDraw(true);
+   }
 }

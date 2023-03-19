@@ -1,7 +1,11 @@
-#include "SFML\Graphics.hpp"
+#include <iostream>
 #include <memory>
 
-class Snake
+#include "SFML\Graphics.hpp"
+#include "Food.h"
+#include "Engine.h"
+
+class Snake : Engine
 {
 public:
     enum Anatomy
@@ -9,28 +13,28 @@ public:
         Head,
         Body
     };
-    // enum Direction
-    // {
-    //     Right,
-    //     Left,
-    //     Up,
-    //     Down
-    // };
+    struct Player
+    {
+        sf::Vector2f pos;
+        sf::RectangleShape shape;
+    };
 
-    Snake(std::vector<sf::Vector2f> corpse, sf::Keyboard::Key direction);
+    Snake(std::vector<Player> initialPlayer, sf::Keyboard::Key direction);
     ~Snake();
 
     void update(sf::Event event);
-    void move(float dt);
+    void move(float dt, sf::Vector2f windowSize);
     void draw(sf::RenderWindow &window);
+    void eat(Food &food);
     // TODO: mudar o codigo para que o vetor m_positions possa ser um vetor de uma struct
     // onde possui as posiçoes e o size da posiçao
     // void setSize(sf::Vector2f newSize);
 
 private:
-    std::vector<sf::Vector2f> m_positions;
+    std::vector<Player> player;
+    // std::vector<sf::Vector2f> m_positions;
     sf::Keyboard::Key m_direction;
-    sf::Vector2f size = sf::Vector2f(7.0f, 7.0f);
-    float m_speed = 100.f;
-    
+    const sf::Vector2f size = sf::Vector2f(7.0f, 7.0f);
+    float m_speed = 200.f;
+    float m_borderOffSet = 3.5f;
 };

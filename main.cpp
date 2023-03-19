@@ -1,24 +1,28 @@
 #include <iostream>
 #include "SFML\Graphics.hpp"
 #include "Snake.h"
-#include "Food.h"
 
 // Declarando as variaveis globais
 sf::Vector2f viewSize(800, 600);
 sf::VideoMode vm(viewSize.x, viewSize.y);
 sf::RenderWindow window(vm, "Ssnake", sf::Style::Default);
 const float k_speed = 6.0f;
+sf::RectangleShape rect;
+
+
 
 // The player
 // Player initialization
-Snake s(std::vector<sf::Vector2f>{sf::Vector2f(2.0, 2.0)}, sf::Keyboard::Right);
+Snake s(std::vector<Snake::Player>{{sf::Vector2f(2.0, 2.0),
+                                   rect}},
+        sf::Keyboard::Right);
 Food food;
 
 // Renderiza a cobra na tela, para cada elemento do corpo da cobra
 void draw()
 {
+    food.draw(window, viewSize);
     s.draw(window);
-    food.draw(window);
 }
 
 void updateInput()
@@ -58,11 +62,12 @@ int main()
         updateInput();
 
         window.clear(sf::Color::Black);
-        s.move(dt.asSeconds());
+        s.move(dt.asSeconds(), viewSize);
+        s.eat(food);
 
         // Desenha todas as entidades.
         draw();
-        
+
         window.display();
     }
 

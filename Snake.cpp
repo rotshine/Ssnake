@@ -1,137 +1,104 @@
-#include "Snake.h"
 #include <iostream>
+#include "Snake.h"
 
-// A parte do corpo
-
-Snake::Snake() {}
+Snake::Snake(std::vector<sf::Vector2f> corpse, sf::Keyboard::Key direction) : m_positions(corpse), m_direction(direction)
+{
+}
 Snake::~Snake() {}
 
-// Snake Snake::init(Snake::snake s)
-// {
-//     Snake i_s;
-//     i_s.update(s);
-//     return i_s;
-// }
-
-void Snake::movement(sf::Event::KeyEvent key)
+// Atualiza a direção do moviemnto
+void Snake::update(sf::Event event)
 {
-    // Checa se a direção da cobra é valida para o próximo movimento
-    auto checkDirection = [&](Direction d) -> bool
+    if (event.type == sf::Event::KeyPressed)
     {
-        switch (d)
+        switch (event.key.code)
         {
-        case Direction::Right:
-            if (m_d != Direction::Left)
+        case sf::Keyboard::Right:
+            if (m_direction != sf::Keyboard::Left)
             {
-                m_d = Direction::Right;
-                return true;
-            }
-            else
-            {
-                return false;
+                m_direction = sf::Keyboard::Right;
             }
             break;
 
-        case Direction::Left:
-            if (m_d != Direction::Right)
+        case sf::Keyboard::Left:
+            if (m_direction != sf::Keyboard::Right)
             {
-                m_d = Direction::Left;
-                return true;
-            }
-            else
-            {
-                return false;
+                m_direction = sf::Keyboard::Left;
             }
             break;
 
-        case Direction::Up:
-            if (m_d != Down)
+        case sf::Keyboard::Up:
+            if (m_direction != sf::Keyboard::Down)
             {
-                m_d = Direction::Up;
-                return true;
-            }
-            else
-            {
-                return false;
+                m_direction = sf::Keyboard::Up;
             }
             break;
 
-        case Direction::Down:
-            if (m_d != Up)
+        case sf::Keyboard::Down:
+            if (m_direction != sf::Keyboard::Up)
             {
-                m_d = Direction::Down;
-                return true;
-            }
-            else
-            {
-                return false;
+                m_direction = sf::Keyboard::Down;
             }
             break;
+
         default:
-            return false;
             break;
         }
-    };
+    }
+}
 
-    // Checa a tecla de entrada e executa o movimento de acordo
-    switch (key.code)
+// Realiza o movimento do player.
+void Snake::move(float dt)
+{
+    switch (m_direction)
     {
-
-    case sf::Keyboard::Key::Right:
-
-        if (checkDirection(Direction::Right))
+    case sf::Keyboard::Right:
+        for (size_t i = 0; i < m_positions.size(); i++)
         {
-            std::cout << "direita" << std::endl;
-            // std::cout << "funfo";
-            // for (int i = 0; i < this->m_player.size(); i++)
-            // {
-            //     this->m_player[i].position.x += 6.0f;
-            // }
-
-            m_player[0].position.x + m_kspeed;
+            std::cout << "Direita" << std::endl;
+            m_positions[i].x += m_speed * dt;
         }
         break;
 
-    case sf::Keyboard::Key::Left:
-        if (checkDirection(Direction::Left))
+    case sf::Keyboard::Left:
+        for (size_t i = 0; i < m_positions.size(); i++)
         {
-            std::cout << "esquerda" << std::endl;
-            m_player[0].position.x - m_kspeed;
+            std::cout << "Esquerda" << std::endl;
+            m_positions[i].x -= m_speed * dt;
         }
         break;
-    case sf::Keyboard::Key::Up:
-        if (checkDirection(Direction::Up))
+
+    case sf::Keyboard::Up:
+        for (size_t i = 0; i < m_positions.size(); i++)
         {
-            std::cout << "up" << std::endl;
-            m_player[0].position.y - m_kspeed;
+            m_positions[i].y -= m_speed * dt;
         }
-    case sf::Keyboard::Key::Down:
-        if (checkDirection(Direction::Down))
+        break;
+
+    case sf::Keyboard::Down:
+        for (size_t i = 0; i < m_positions.size(); i++)
         {
-            std::cout << "down" << std::endl;
-            m_player[0].position.y + m_kspeed;
+            m_positions[i].y += m_speed * dt;
         }
+        break;
 
     default:
         break;
     }
 }
 
-void Snake::update(Snake::snake snake)
-{
-    m_player.push_back(snake);
-}
-
+// Função para desenhar a nosso player na tela.
 void Snake::draw(sf::RenderWindow &window)
 {
-
-    for (int i = 0; i < m_player.size(); i++)
+    for (size_t i = 0; i < m_positions.size(); i++)
     {
         sf::RectangleShape rect;
-        rect.setSize(sf::Vector2f(5.0f, 5.0f));
+        rect.setSize(size);
+        rect.setOrigin(size.x / 2., size.y / 2.);
         rect.setFillColor(sf::Color::White);
-        rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
-        rect.setPosition(m_player[i].position.x, m_player[i].position.y);
+        rect.setPosition(m_positions[i].x, m_positions[i].y);
+        rect.setOutlineColor(sf::Color(186, 186, 186)); // Cor um pouco acinzentada.
+        rect.setOutlineThickness(1.f);
         window.draw(rect);
     }
 }

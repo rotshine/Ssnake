@@ -4,45 +4,33 @@
 class Snake
 {
 public:
-    enum BodyPart
+    enum Anatomy
     {
         Head,
         Body
     };
-    enum Direction
-    {
-        Right,
-        Left,
-        Up,
-        Down
-    };
-    struct snake
-    {
-        sf::Vector2f position;
-        BodyPart bodyPart;
-    };
+    // enum Direction
+    // {
+    //     Right,
+    //     Left,
+    //     Up,
+    //     Down
+    // };
 
-    // Constructor
-
-    Snake();
-
-    // Destructor
-
+    Snake(std::vector<sf::Vector2f> corpse, sf::Keyboard::Key direction);
     ~Snake();
 
-    // Functions
-
-    // void movement(sf::Keyboard::Key key);
-     void movement(sf::Event::KeyEvent key);
-    // Snake init(Snake::snake);
-    void update(snake s);
+    void update(sf::Event event);
+    void move(float dt);
     void draw(sf::RenderWindow &window);
-
-    // Members
+    // TODO: mudar o codigo para que o vetor m_positions possa ser um vetor de uma struct
+    // onde possui as posiçoes e o size da posiçao
+    // void setSize(sf::Vector2f newSize);
 
 private:
-    const float m_kspeed = 6.0f;
-    std::vector<snake> m_player = {};
-    Direction m_d;
-    BodyPart m_bp;
+    std::vector<sf::Vector2f> m_positions;
+    sf::Keyboard::Key m_direction;
+    sf::Vector2f size = sf::Vector2f(7.0f, 7.0f);
+    float m_speed = 100.f;
+    
 };

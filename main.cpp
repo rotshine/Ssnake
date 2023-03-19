@@ -1,18 +1,24 @@
 #include <iostream>
 #include "SFML\Graphics.hpp"
 #include "Snake.h"
+#include "Food.h"
 
 // Declarando as variaveis globais
-sf::Vector2f viewSize(1024, 768);
+sf::Vector2f viewSize(800, 600);
 sf::VideoMode vm(viewSize.x, viewSize.y);
 sf::RenderWindow window(vm, "Ssnake", sf::Style::Default);
+const float k_speed = 6.0f;
 
 // The player
-Snake s;
+// Player initialization
+Snake s(std::vector<sf::Vector2f>{sf::Vector2f(2.0, 2.0)}, sf::Keyboard::Right);
+Food food;
 
 // Renderiza a cobra na tela, para cada elemento do corpo da cobra
 void draw()
 {
+    s.draw(window);
+    food.draw(window);
 }
 
 void updateInput()
@@ -24,17 +30,21 @@ void updateInput()
         switch (event.type)
         {
         case sf::Event::Closed:
-            std::cout << "fechei";
+            std::cout << "Aplicação encerrada no botão de fechar";
             window.close();
         case sf::Event::KeyPressed:
-            s.movement(event.key);
-            event.key.code;
+            if (event.key.code == sf::Keyboard::Escape)
+            {
+                std::cout << "ESC pressionado";
+                window.close();
+            }
             break;
 
         default:
             break;
         }
 
+        s.update(event);
     }
 }
 
@@ -44,12 +54,15 @@ int main()
 
     while (window.isOpen())
     {
+        sf::Time dt = clock.restart();
         updateInput();
 
-        sf::Time dt = clock.restart();
         window.clear(sf::Color::Black);
-        s.draw(window);
+        s.move(dt.asSeconds());
 
+        // Desenha todas as entidades.
+        draw();
+        
         window.display();
     }
 

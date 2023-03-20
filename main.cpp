@@ -11,8 +11,9 @@ sf::RectangleShape rect;
 
 // The player
 // Player initialization
-Snake s(std::vector<Snake::Player>{{sf::Vector2f(2.0, 2.0),
-                                   rect}},
+Snake s(std::vector<Snake::Player>{
+            {sf::Vector2f(2.0, 2.0),
+             rect}},
         sf::Keyboard::Right);
 Food food;
 

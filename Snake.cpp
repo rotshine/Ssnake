@@ -125,7 +125,16 @@ void Snake::eat(Food &food)
 {
     if (collider(player[0].shape, food.getFoodShape()))
     {
-        std::cout << "AHA!";
         food.setFoodDraw(false);
+
+        sf::RectangleShape rect(sf::Vector2f(0.0, 0.0));
+
+        Player adder = {
+            .pos = player.back().pos + sf::Vector2f(m_bodySize, 0.0),
+            .shape = rect
+
+        };
+
+        player.push_back(adder);
     }
 }

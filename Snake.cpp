@@ -51,6 +51,9 @@ void Snake::update(sf::Event event)
 // Realiza o movimento do player.
 void Snake::move(float dt, sf::Vector2f windowSize)
 {
+
+    // TODO: 
+    // Checar pela colisão das laterais para que a cobra e todo o seu corpo pare de andar ao atingir a borda.
     switch (m_direction)
     {
     case sf::Keyboard::Right:

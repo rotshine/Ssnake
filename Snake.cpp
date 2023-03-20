@@ -52,7 +52,7 @@ void Snake::update(sf::Event event)
 void Snake::move(float dt, sf::Vector2f windowSize)
 {
 
-    // TODO: 
+    // TODO:
     // Checar pela colisão das laterais para que a cobra e todo o seu corpo pare de andar ao atingir a borda.
     switch (m_direction)
     {
@@ -130,10 +130,29 @@ void Snake::eat(Food &food)
     {
         food.setFoodDraw(false);
 
-        sf::RectangleShape rect(sf::Vector2f(0.0, 0.0));
+        sf::RectangleShape rect;
+        sf::Vector2f toAdd;
+
+        switch (m_direction)
+        {
+        case sf::Keyboard::Right:
+            toAdd = sf::Vector2f(-m_bodySize, 0.0);
+            break;
+        case sf::Keyboard::Left:
+            toAdd = sf::Vector2f(+m_bodySize, 0.0);
+            break;
+        case sf::Keyboard::Up:
+            toAdd = sf::Vector2f(0.0, +m_bodySize);
+            break;
+        case sf::Keyboard::Down:
+            toAdd = sf::Vector2f(0.0, -m_bodySize);
+            break;
+        default:
+            break;
+        }
 
         Player adder = {
-            .pos = player.back().pos + sf::Vector2f(m_bodySize, 0.0),
+            .pos = player.back().pos + toAdd,
             .shape = rect
 
         };

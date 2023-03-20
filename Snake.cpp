@@ -111,14 +111,6 @@ void Snake::draw(sf::RenderWindow &window)
 {
     for (size_t i = 0; i < player.size(); i++)
     {
-        // sf::RectangleShape rect;
-        // rect.setSize(size);
-        // rect.setOrigin(size.x / 2., size.y / 2.);
-        // rect.setFillColor(sf::Color::White);
-        // rect.setOutlineColor(sf::Color(186, 186, 186)); // Cor um pouco acinzentada.
-        // rect.setOutlineThickness(1.f);
-        // rect.setPosition(player[i].pos.x, player[i].pos.y);
-
         player[i].shape.setSize(size);
         player[i].shape.setFillColor(sf::Color::White);
         player[i].shape.setOutlineColor(sf::Color(186, 186, 186)); // Cor um pouco acinzentada.
@@ -131,11 +123,6 @@ void Snake::draw(sf::RenderWindow &window)
 
 void Snake::eat(Food &food)
 {
-    // if (player[0].shape.getGlobalBounds().intersects(food.getFoodShape().getGlobalBounds()))
-    // {
-    //     food.setFoodDraw(false);
-    // }
-
     if (collider(player[0].shape, food.getFoodShape()))
     {
         std::cout << "AHA!";

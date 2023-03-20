@@ -9,8 +9,6 @@ sf::RenderWindow window(vm, "Ssnake", sf::Style::Default);
 const float k_speed = 6.0f;
 sf::RectangleShape rect;
 
-
-
 // The player
 // Player initialization
 Snake s(std::vector<Snake::Player>{{sf::Vector2f(2.0, 2.0),
@@ -70,6 +68,5 @@ int main()
 
         window.display();
     }
-
     return 0;
 }

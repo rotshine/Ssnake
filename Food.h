@@ -13,12 +13,9 @@ public:
     sf::RectangleShape getFoodShape();
 
 private:
-    // int m_seed;
     bool m_isFoodDrawn = false;
     float m_borderOffSet = 7.5f;
     float m_foodSize = 15.0f;
     sf::RectangleShape m_food =
         sf::RectangleShape(sf::Vector2f(m_foodSize, m_foodSize));
-
-    // sf::Vector2f m_size = sf::Vector2f(m_foodSize, m_foodSize);
 };

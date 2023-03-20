@@ -28,7 +28,6 @@ void Food::draw(sf::RenderWindow &window, sf::Vector2f windowSize)
         m_food.setPosition(pos);
         m_isFoodDrawn = true;
     }
-    // std::cout << std::to_string(m_food.getPosition().x) << " " << std::to_string(m_food.getPosition().y) << std::endl;
     window.draw(m_food);
 }
 

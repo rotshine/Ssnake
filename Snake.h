@@ -26,9 +26,6 @@ public:
     void move(float dt, sf::Vector2f windowSize);
     void draw(sf::RenderWindow &window);
     void eat(Food &food);
-    // TODO: mudar o codigo para que o vetor m_positions possa ser um vetor de uma struct
-    // onde possui as posiçoes e o size da posiçao
-    // void setSize(sf::Vector2f newSize);
 
 private:
     float m_speed = 350.f;

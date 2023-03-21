@@ -28,12 +28,12 @@ public:
     void eat(Food &food);
 
 private:
-    float m_speed = 350.f;
+    float m_speed = 300.f;
     float m_borderOffSet = 7.5f;
     float m_bodySize = 15.f;
     std::vector<Player> player;
     sf::Keyboard::Key m_direction;
     const sf::Vector2f size = sf::Vector2f(m_bodySize, m_bodySize);
-    sf::Vector2f n;
-    sf::Vector2f nPlus_1;
+    // sf::Vector2f n;
+    // sf::Vector2f nPlus_1;
 };

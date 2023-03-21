@@ -51,34 +51,20 @@ void Snake::update(sf::Event event)
 // Realiza o movimento do player.
 void Snake::move(float dt, sf::Vector2f windowSize)
 {
-    // sf::Vector2f n(0.0, 0.0);
-    // sf::Vector2f nPlus_1(0.0, 0.0);
+    sf::Vector2f n(0.0, 0.0);
+    sf::Vector2f n2(0.0, 0.0);
 
+    n = player[0].pos;
     // iterador que captura a posiçao atual e a proxima posiçao, depois troca seus valores
     for (int i = 0; i < player.size(); i++)
     {
 
-        /* / Move as posiçoes do vetor
-        // Talvez este código possa ficar abaixo, fora da função lambda
-        if (i + 1 < player.size())
-        {
-        nPlus_1 = player[i + 1].pos;
-        std::cout << player[i].pos.x << " " << player[i].pos.y << std::endl;
-        std::cout << nPlus_1.x << " " << nPlus_1.y << std::endl;
-        }
-
-        // Checa se a iteração está na cabeça (indice 0), caso true move a cobra.
-        n = player[i].pos; */
-
         // ---------------
 
-        n = player[i].pos;
-        if (i + 1 < player.size())
-        {
-            nPlus_1 = player[i + 1].pos;
-        }
         if (i == 0)
         {
+            n = player[i].pos;
+
             switch (m_direction)
 
             {
@@ -128,15 +114,11 @@ void Snake::move(float dt, sf::Vector2f windowSize)
 
         if (i != 0)
         {
+            n2 = player[i].pos;
             player[i].pos = n;
-            n = nPlus_1;
+            n = n2;
+      
         }
-        // Move os valores do corpo no vetor
-        // Condiçao executa depois de passar pela cabeça (indice 0).
-
-        // std::cout << player[i].pos.x << " " << player[i].pos.y << std::endl;
-        // std::cout << nPlus_1.x << " " << nPlus_1.y << std::endl;
-        // std::cout << player.size() << std::endl;
     }
 
     // TODO:

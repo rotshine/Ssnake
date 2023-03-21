@@ -9,6 +9,8 @@ sf::RenderWindow window(vm, "Ssnake", sf::Style::Default);
 const float k_speed = 6.0f;
 sf::RectangleShape rect;
 
+
+
 // The player
 // Player initialization
 Snake s(std::vector<Snake::Player>{
@@ -53,6 +55,7 @@ void updateInput()
 
 int main()
 {
+    window.setFramerateLimit(15);
     sf::Clock clock;
 
     while (window.isOpen())
@@ -61,9 +64,9 @@ int main()
         updateInput();
 
         window.clear(sf::Color::Black);
-        s.move(dt.asSeconds(), viewSize);
         s.eat(food);
         draw();
+        s.move(dt.asSeconds(), viewSize);
 
         // Desenha todas as entidades.
 

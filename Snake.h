@@ -34,4 +34,6 @@ private:
     std::vector<Player> player;
     sf::Keyboard::Key m_direction;
     const sf::Vector2f size = sf::Vector2f(m_bodySize, m_bodySize);
+    sf::Vector2f n;
+    sf::Vector2f nPlus_1;
 };

@@ -54,6 +54,7 @@ void Snake::move(float dt, sf::Vector2f windowSize)
     sf::Vector2f n(0.0, 0.0);
     sf::Vector2f n2(0.0, 0.0);
 
+    // lambda para realizar o movimento das posiçoes no vetor.
     auto moveBody = [&](int index)
     {
         if (index > 0)
@@ -66,6 +67,7 @@ void Snake::move(float dt, sf::Vector2f windowSize)
 
     n = player[0].pos;
 
+    // Checa se o player encostou nas bordas, se sim, para todos os movimentos.
     if (m_isBorderHit)
     {
         return;

@@ -64,11 +64,12 @@ int main()
         updateInput();
 
         window.clear(sf::Color::Black);
-        s.eat(food);
-        draw();
+
         s.move(dt.asSeconds(), viewSize);
+        s.eat(food);
 
         // Desenha todas as entidades.
+        draw();
 
         window.display();
     }

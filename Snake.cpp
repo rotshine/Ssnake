@@ -54,70 +54,92 @@ void Snake::move(float dt, sf::Vector2f windowSize)
     sf::Vector2f n(0.0, 0.0);
     sf::Vector2f n2(0.0, 0.0);
 
-    n = player[0].pos;
-    // iterador que captura a posiçao atual e a proxima posiçao, depois troca seus valores
-    for (int i = 0; i < player.size(); i++)
+    auto moveBody = [&](int index)
     {
-
-        // ---------------
-
-        if (i == 0)
+        if (index > 0)
         {
-            n = player[i].pos;
-
-            switch (m_direction)
-
-            {
-            case sf::Keyboard::Right:
-                player[0].pos.x += m_speed * dt;
-
-                if (player[0].pos.x + m_borderOffSet > windowSize.x)
-                {
-                    player[0].pos.x = windowSize.x - m_borderOffSet;
-                }
-
-                break;
-
-            case sf::Keyboard::Left:
-
-                player[0].pos.x -= m_speed * dt;
-
-                if (player[0].pos.x - m_borderOffSet < 0)
-                {
-                    player[0].pos.x = m_borderOffSet;
-                }
-
-                break;
-
-            case sf::Keyboard::Up:
-                player[0].pos.y -= m_speed * dt;
-
-                if (player[0].pos.y - m_borderOffSet < 0)
-                {
-                    player[0].pos.y = m_borderOffSet;
-                };
-                break;
-
-            case sf::Keyboard::Down:
-                player[0].pos.y += m_speed * dt;
-
-                if (player[0].pos.y + m_borderOffSet > windowSize.y)
-                {
-                    player[0].pos.y = windowSize.y - m_borderOffSet;
-                };
-                break;
-
-            default:
-                break;
-            }
-        }
-
-        if (i != 0)
-        {
-            n2 = player[i].pos;
-            player[i].pos = n;
+            n2 = player[index].pos;
+            player[index].pos = n;
             n = n2;
-      
+        }
+    };
+
+    n = player[0].pos;
+
+    if (m_isBorderHit)
+    {
+        return;
+    }
+    else
+    { // iterador que captura a posiçao atual e a proxima posiçao, depois troca seus valores
+        for (int i = 0; i < player.size(); i++)
+        {
+
+            // ---------------
+
+            if (i == 0)
+            {
+                n = player[i].pos;
+
+                switch (m_direction)
+
+                {
+                case sf::Keyboard::Right:
+                    player[0].pos.x += m_speed * dt;
+
+                    if (player[0].pos.x + m_borderOffSet > windowSize.x)
+                    {
+                        player[0].pos.x = windowSize.x - m_borderOffSet;
+                        m_isBorderHit = true;
+                    }
+
+                    break;
+
+                case sf::Keyboard::Left:
+
+                    player[0].pos.x -= m_speed * dt;
+
+                    if (player[0].pos.x - m_borderOffSet < 0)
+                    {
+                        player[0].pos.x = m_borderOffSet;
+                        m_isBorderHit = true;
+                    }
+
+                    break;
+
+                case sf::Keyboard::Up:
+                    player[0].pos.y -= m_speed * dt;
+
+                    if (player[0].pos.y - m_borderOffSet < 0)
+                    {
+                        player[0].pos.y = m_borderOffSet;
+                        m_isBorderHit = true;
+                    };
+                    break;
+
+                case sf::Keyboard::Down:
+                    player[0].pos.y += m_speed * dt;
+
+                    if (player[0].pos.y + m_borderOffSet > windowSize.y)
+                    {
+                        player[0].pos.y = windowSize.y - m_borderOffSet;
+                        m_isBorderHit = true;
+                    };
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            moveBody(i);
+
+            // if (i != 0)
+            // {
+            //     n2 = player[i].pos;
+            //     player[i].pos = n;
+            //     n = n2;
+            // }
         }
     }
 

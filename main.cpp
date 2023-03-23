@@ -55,23 +55,24 @@ void updateInput()
     }
 }
 
-
 int main()
 {
     window.setFramerateLimit(15);
     sf::Clock clock;
 
     // Carrega a textura para o sprite de Game Over.
-
+    // ------------------------------------------------------------------------------------------------
     if (!goTexture.loadFromFile("Assets/Game-Over.png"))
     {
         std::cout << "Erro ao carregar a textura." << std::endl;
     }
-    goTexture.loadFromFile("Assets/Game-Over.png");
+    goTexture.loadFromFile("Assets/GO.png");
     s_gameOver.setTexture(goTexture);
     s_gameOver.setOrigin(goTexture.getSize().x / 2, goTexture.getSize().y);
     s_gameOver.setPosition(viewSize.x / 2, viewSize.y / 2);
     s_gameOver.scale(0.2, 0.2);
+    // ------------------------------------------------------------------------------------------------
+
 
     while (window.isOpen())
     {

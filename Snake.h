@@ -35,6 +35,4 @@ private:
     sf::Keyboard::Key m_direction;
     const sf::Vector2f size = sf::Vector2f(m_bodySize, m_bodySize);
     bool m_isBorderHit = false;
-    // sf::Vector2f n;
-    // sf::Vector2f nPlus_1;
 };

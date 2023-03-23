@@ -7,7 +7,6 @@
 sf::Vector2f viewSize(800, 600);
 sf::VideoMode vm(viewSize.x, viewSize.y);
 sf::RenderWindow window(vm, "Ssnake", sf::Style::Default);
-const float k_speed = 6.0f;
 sf::RectangleShape rect;
 sf::Texture goTexture;
 sf::Sprite s_gameOver;
@@ -15,7 +14,7 @@ sf::Sprite s_gameOver;
 // The player
 // Player initialization
 Snake s(std::vector<Snake::Player>{
-            {sf::Vector2f(2.0, 2.0),
+            {sf::Vector2f(viewSize.x / 2, viewSize.y / 2),
              rect}},
         sf::Keyboard::Right);
 Food food;
@@ -72,7 +71,6 @@ int main()
     s_gameOver.setPosition(viewSize.x / 2, viewSize.y / 2);
     s_gameOver.scale(0.2, 0.2);
     // ------------------------------------------------------------------------------------------------
-
 
     while (window.isOpen())
     {

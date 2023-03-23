@@ -144,8 +144,8 @@ void Snake::draw(sf::RenderWindow &window)
         player[i].shape.setFillColor(sf::Color::Black);
         player[i].shape.setOutlineColor(sf::Color(186, 186, 186)); // Cor um pouco acinzentada.
         player[i].shape.setOutlineThickness(1.f);
-        player[i].shape.setPosition(player[i].pos.x, player[i].pos.y);
         player[i].shape.setOrigin(size.x / 2., size.y / 2.);
+        player[i].shape.setPosition(player[i].pos);
         window.draw(player[i].shape);
     }
 }

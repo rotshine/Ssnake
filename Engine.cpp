@@ -6,5 +6,4 @@ bool Engine::collider(sf::RectangleShape player, sf::RectangleShape food)
     auto secondBox =  food.getGlobalBounds();
 
     return firstBox.intersects(secondBox);
-
 }

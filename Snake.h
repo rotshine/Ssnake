@@ -23,7 +23,7 @@ public:
     ~Snake();
 
     void update(sf::Event event);
-    void move(float dt, sf::Vector2f windowSize);
+    bool move(float dt, sf::Vector2f windowSize);
     void draw(sf::RenderWindow &window);
     void eat(Food &food);
 

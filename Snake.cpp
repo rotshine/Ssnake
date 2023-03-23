@@ -49,7 +49,7 @@ void Snake::update(sf::Event event)
 }
 
 // Realiza o movimento do player.
-void Snake::move(float dt, sf::Vector2f windowSize)
+bool Snake::move(float dt, sf::Vector2f windowSize)
 {
     sf::Vector2f n(0.0, 0.0);
     sf::Vector2f n2(0.0, 0.0);
@@ -68,15 +68,16 @@ void Snake::move(float dt, sf::Vector2f windowSize)
     n = player[0].pos;
 
     // Checa se o player encostou nas bordas, se sim, para todos os movimentos.
+
     if (m_isBorderHit)
     {
-        return;
+        return m_isBorderHit;
     }
     else
-    { // iterador que captura a posiçao atual e a proxima posiçao, depois troca seus valores
+    {
+        // iterador que captura a posiçao atual e a proxima posiçao, depois troca seus valores
         for (int i = 0; i < player.size(); i++)
         {
-
             // ---------------
 
             if (i == 0)
@@ -94,34 +95,28 @@ void Snake::move(float dt, sf::Vector2f windowSize)
                         player[0].pos.x = windowSize.x - m_borderOffSet;
                         m_isBorderHit = true;
                     }
-
                     break;
 
                 case sf::Keyboard::Left:
-
                     player[0].pos.x -= m_speed * dt;
-
                     if (player[0].pos.x - m_borderOffSet < 0)
                     {
                         player[0].pos.x = m_borderOffSet;
                         m_isBorderHit = true;
                     }
-
                     break;
 
                 case sf::Keyboard::Up:
                     player[0].pos.y -= m_speed * dt;
-
                     if (player[0].pos.y - m_borderOffSet < 0)
                     {
                         player[0].pos.y = m_borderOffSet;
                         m_isBorderHit = true;
                     };
-                    break;
 
+                    break;
                 case sf::Keyboard::Down:
                     player[0].pos.y += m_speed * dt;
-
                     if (player[0].pos.y + m_borderOffSet > windowSize.y)
                     {
                         player[0].pos.y = windowSize.y - m_borderOffSet;
@@ -133,75 +128,11 @@ void Snake::move(float dt, sf::Vector2f windowSize)
                     break;
                 }
             }
-
+            // Move as outras partes do corpo no indice "i"
             moveBody(i);
-
-            // if (i != 0)
-            // {
-            //     n2 = player[i].pos;
-            //     player[i].pos = n;
-            //     n = n2;
-            // }
         }
     }
-
-    // TODO:
-    // Checar pela colisão das laterais para que a cobra e todo o seu corpo pare de andar ao atingir a borda.
-    /*  switch (m_direction)
-     {
-     case sf::Keyboard::Right:
-
-         for (size_t i = 0; i < player.size(); i++)
-         {
-             player[0].pos.x += m_speed * dt;
-
-             if (player[0].pos.x + m_borderOffSet > windowSize.x)
-             {
-                 player[0].pos.x = windowSize.x - m_borderOffSet;
-             }
-         }
-
-         break;
-
-     case sf::Keyboard::Left:
-         for (size_t i = 0; i < player.size(); i++)
-         {
-             player[0].pos.x -= m_speed * dt;
-
-             if (player[0].pos.x - m_borderOffSet < 0)
-             {
-                 player[0].pos.x = m_borderOffSet;
-             }
-         }
-         break;
-
-     case sf::Keyboard::Up:
-         for (size_t i = 0; i < player.size(); i++)
-         {
-             player[0].pos.y -= m_speed * dt;
-
-             if (player[0].pos.y - m_borderOffSet < 0)
-             {
-                 player[0].pos.y = m_borderOffSet;
-             };
-         }
-         break;
-
-     case sf::Keyboard::Down:
-         for (size_t i = 0; i < player.size(); i++)
-         {
-             player[0].pos.y += m_speed * dt;
-
-             if (player[0].pos.y + m_borderOffSet > windowSize.y)
-             {
-                 player[0].pos.y = windowSize.y - m_borderOffSet;
-             };
-         }
-         break;
-
-     default:
-         break;
-     } */
+    return false;
 }
 
 // Função para desenhar a nosso player na tela.
@@ -210,7 +141,7 @@ void Snake::draw(sf::RenderWindow &window)
     for (int i = 0; i < player.size(); i++)
     {
         player[i].shape.setSize(size);
-        player[i].shape.setFillColor(sf::Color::White);
+        player[i].shape.setFillColor(sf::Color::Black);
         player[i].shape.setOutlineColor(sf::Color(186, 186, 186)); // Cor um pouco acinzentada.
         player[i].shape.setOutlineThickness(1.f);
         player[i].shape.setPosition(player[i].pos.x, player[i].pos.y);
@@ -253,9 +184,7 @@ void Snake::eat(Food &food)
         // pega o ultimo elemento do vetor e adiciona um offset que chamei de "toAdd",
         Player adder = {
             .pos = player.back().pos + toAdd,
-            .shape = rect
-
-        };
+            .shape = rect};
 
         // Adiciona o struct ao vetor, criando uma parte nova do corpo
         player.push_back(adder);

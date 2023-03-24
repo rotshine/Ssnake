@@ -11,15 +11,19 @@ sf::RectangleShape rect;
 sf::Texture goTexture;
 sf::Sprite s_gameOver;
 
+// checa se o jogo acabou
+bool isGameOver = false;
+
 // The player
 // Player initialization
-Snake s(std::vector<Snake::Player>{
-            {sf::Vector2f(viewSize.x / 2, viewSize.y / 2),
-             rect}},
-        sf::Keyboard::Right);
+Snake s;
 Food food;
 
 // Renderiza a cobra na tela, para cada elemento do corpo da cobra
+void start()
+{
+   s.init(std::vector<Snake::Player>{{sf::Vector2f(viewSize.x / 2, viewSize.y / 2), rect}}, sf::Keyboard::Right);
+}
 void draw()
 {
     s.draw(window);
@@ -36,13 +40,19 @@ void updateInput()
         switch (event.type)
         {
         case sf::Event::Closed:
-            std::cout << "Aplicação encerrada no botão de fechar";
             window.close();
         case sf::Event::KeyPressed:
             if (event.key.code == sf::Keyboard::Escape)
             {
-                std::cout << "ESC pressionado";
                 window.close();
+            }
+            if(isGameOver){
+                if(event.key.code == sf::Keyboard::Enter){
+                    start();
+                    s.setBorderHit(false);
+                    isGameOver = false;
+                    food.setFoodDraw(false);
+                }
             }
             break;
 
@@ -53,6 +63,7 @@ void updateInput()
         s.update(event);
     }
 }
+
 
 int main()
 {
@@ -72,6 +83,9 @@ int main()
     s_gameOver.scale(0.2, 0.2);
     // ------------------------------------------------------------------------------------------------
 
+
+    start();
+
     while (window.isOpen())
     {
         sf::Time dt = clock.restart();
@@ -82,6 +96,7 @@ int main()
         if (s.move(dt.asSeconds(), viewSize))
         {
             window.draw(s_gameOver);
+            isGameOver = true;
         }
         s.eat(food);
 

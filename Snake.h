@@ -19,6 +19,7 @@ public:
         sf::RectangleShape shape;
     };
 
+    Snake();
     Snake(std::vector<Player> initialPlayer, sf::Keyboard::Key direction);
     ~Snake();
 
@@ -26,6 +27,8 @@ public:
     bool move(float dt, sf::Vector2f windowSize);
     void draw(sf::RenderWindow &window);
     void eat(Food &food);
+    void init(std::vector<Player> player, sf::Keyboard::Key direction);
+    void setBorderHit(bool isBorderHit);
 
 private:
     float m_speed = 300.f;

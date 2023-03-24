@@ -1,11 +1,18 @@
 #include "Snake.h"
 
-Snake::Snake(std::vector<Player> initialPlayer,
-             sf::Keyboard::Key direction)
-    : player(initialPlayer), m_direction(direction)
+Snake::Snake(){}
+
+Snake::Snake(std::vector<Player> initialPlayer, sf::Keyboard::Key direction)
 {
+    init(initialPlayer, direction);
 }
 Snake::~Snake() {}
+
+void Snake::init(std::vector<Player> initialPlayer, sf::Keyboard::Key direction)
+{
+    player = initialPlayer;
+    m_direction = direction;
+}
 
 // Atualiza a direção do moviemnto
 void Snake::update(sf::Event event)
@@ -189,4 +196,8 @@ void Snake::eat(Food &food)
         // Adiciona o struct ao vetor, criando uma parte nova do corpo
         player.push_back(adder);
     }
+}
+
+void Snake::setBorderHit(bool isBorderHit){
+    m_isBorderHit = isBorderHit;
 }
